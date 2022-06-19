@@ -1,0 +1,35 @@
+<br />
+<input type="file" (change)="onFileChange($event)" multiple="false" />
+<br />
+<br />
+<p>
+  <mat-button-toggle-group
+    name="Format"
+    aria-label="Format"
+    [value]="'Table'"
+    (change)="toggle($event)"
+  >
+    <mat-button-toggle value="Tabel">Tabel</mat-button-toggle>
+    <mat-button-toggle value="Json">Json</mat-button-toggle>
+  </mat-button-toggle-group>
+</p>
+
+<div
+  class="example-container mat-elevation-z8"
+  *ngIf="isTable && jsonData.length"
+>
+  <mat-table #table [dataSource]="jsonData" #table1>
+    <ng-container [matColumnDef]="col" *ngFor="let col of displayedColumns">
+      <mat-header-cell *matHeaderCellDef> {{ col }} </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{ element[col] }} </mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+  </mat-table>
+</div>
+
+<mat-card *ngIf="!isTable">
+  <pre>
+        {{ jsonData | json }}
+  </pre>
+</mat-card>
